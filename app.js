@@ -6,6 +6,12 @@ const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 
+const session = require('koa-generic-session');
+const redisStore = require('koa-redis');
+const { REDIS_CONF } = require('./config/db');
+const path = require('path');
+const fs = require('fs');
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 
@@ -31,6 +37,18 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start;
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 });
+
+app.keys = ['syc_1234567890#!BBB'];
+app.use(session({
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  },
+  store: redisStore({
+    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  })
+}));
 
 // routes
 app.use(index.routes(), index.allowedMethods());
