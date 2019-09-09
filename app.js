@@ -7,7 +7,7 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 
 const session = require('koa-generic-session');
-const redisStore = require('koa-redis');
+// const redisStore = require('koa-redis');
 const { REDIS_CONF } = require('./config/db');
 const path = require('path');
 const fs = require('fs');
@@ -45,9 +45,9 @@ app.use(session({
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000
   },
-  store: redisStore({
-    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
-  })
+  // store: redisStore({
+  //   all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  // })
 }));
 
 // routes
