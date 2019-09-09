@@ -14,7 +14,7 @@ router.get('/list', loginCheck, async (ctx, next) => {
     await ctx.render('group/group', {
       list: list,
       title: '分组列表',
-      username: ctx.session.username
+      user: ctx.session.user
     });
   } catch (e) {
     console.error(e);

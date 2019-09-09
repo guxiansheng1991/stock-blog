@@ -20,7 +20,7 @@ router.post('/login', async function (ctx, next) {
   try {
     const res = await userController.login(user);
     if (res.length > 0) {
-      ctx.session.username = res[0].user_name;
+      ctx.session.user = res[0];
       await ctx.redirect('/');
     } else {
       // 未注册用户

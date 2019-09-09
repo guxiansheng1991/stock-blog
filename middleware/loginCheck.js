@@ -1,10 +1,10 @@
 const { ErrorModel } = require('../model/resModel');
 
 const loginCheck = async function (ctx, next) {
-  if (ctx.session.username) {
+  if (ctx.session.user && ctx.session.user.user_id) {
     await next();
   } else {
-    ctx.body = new ErrorModel('未登录');
+    await ctx.redirect('/user/login');
   }
 };
 

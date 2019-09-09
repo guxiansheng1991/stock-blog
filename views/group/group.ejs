@@ -10,7 +10,6 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <link rel="stylesheet" href="/stylesheets/sidebar.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
@@ -22,25 +21,8 @@
 </head>
 <body>
 <!-- 侧边栏 -->
-<div class="sidebar left">
-    <div class="toggle-side-in" onclick="toggleSide()">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-    <div class="white"></div>
-    <!-- 用户信息区域 -->
-    <% if(username) { %>
-        <div>用户: <span><%= username %></span></div>
-    <% } else { %>
-        <div><a href="/user/login">登录</a></div>
-    <% } %>
-
-    <!-- 路由列表 -->
-
-</div>
-
-<!-- 展开侧边栏按钮 -->
-<div class="toggle-side" onclick="toggleSide()">
-    <i class="fa fa-bars" aria-hidden="true"></i>
+<div class="side">
+    <iframe frameborder="0" scrolling="no" src="/sidebar.html"></iframe>
 </div>
 
 <!-- 内容区域 开始 -->
@@ -54,8 +36,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-<!-- 侧边栏插件 -->
-<script src="/javascripts/jillix-jQuery-sidebar/jquery.sidebar.min.js"></script>
 <script src="/javascripts/util/util.js"></script>
 <script src="/javascripts/main.js"></script>
 </html>
