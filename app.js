@@ -14,6 +14,7 @@ const fs = require('fs');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const group = require('./routes/group');
 
 // error handler
 onerror(app);
@@ -53,6 +54,7 @@ app.use(session({
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
+app.use(group.routes(), group.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
