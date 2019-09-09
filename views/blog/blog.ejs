@@ -27,7 +27,11 @@
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
     <div class="white"></div>
-    <div>用户: <span><%= username %></span></div>
+    <% if(username) { %>
+        <div>用户: <span><%= username %></span></div>
+    <% } else { %>
+        <div><a href="/user/login">登录</a></div>
+    <% } %>
 </div>
 
 <!-- 展开侧边栏按钮 -->

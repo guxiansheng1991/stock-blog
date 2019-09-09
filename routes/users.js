@@ -32,8 +32,4 @@ router.post('/login', async function (ctx, next) {
   }
 });
 
-router.get('/bar', async function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
-});
-
 module.exports = router;
