@@ -21,23 +21,8 @@
     <![endif]-->
 </head>
 <body>
-<!-- 侧边栏 -->
-<div class="sidebar left">
-    <div class="toggle-side-in" onclick="toggleSide()">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-    <div class="white"></div>
-    <% if(username) { %>
-        <div>用户: <span><%= username %></span></div>
-    <% } else { %>
-        <div><a href="/user/login">登录</a></div>
-    <% } %>
-</div>
-
-<!-- 展开侧边栏按钮 -->
-<div class="toggle-side" onclick="toggleSide()">
-    <i class="fa fa-bars" aria-hidden="true"></i>
-</div>
+<!-- 导航区域 -->
+<%- include('../sidebar', {user: user, activeClassName: 'blog'}); %>
 
 <!-- 内容区域 开始 -->
 <div class="content">

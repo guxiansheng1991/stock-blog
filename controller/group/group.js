@@ -24,8 +24,10 @@ class GroupController {
     groupId = escape(groupId);
     userId = escape(userId);
     const sql = `select group_id, group_name, group_remark, group_delete_flag, user_id from \`group\` where group_id=${groupId} and user_id=${userId}`;
+    console.log('sql', sql);
     try {
       const groupList = await exec(sql);
+      console.log('groupList', groupList);
       if (groupList.length > 0) {
         return Promise.resolve(new SuccessModel(groupList[0], 'success'));
       } else {
@@ -33,7 +35,7 @@ class GroupController {
       }
     } catch (e) {
       console.error(e);
-      return Promise.reject(new ErrorModel({}, 'fail'));
+      return Promise.reject(new ErrorModel(e, 'fail'));
     }
   }
 
@@ -51,7 +53,18 @@ class GroupController {
     const groupDeleteFlag = escape(group.deleteFlag);
     const userId = escape(group.userId);
     const sql = `insert into \`group\`(group_name, group_remark, group_delete_flag, user_id) values(${groupName}, ${groupRemark}, ${groupDeleteFlag}, ${userId})`;
-    return exec(sql);
+    try {
+      const addRes = await exec(sql);
+      if (addRes.affectedRows > 0) {
+        return Promise.resolve(new SuccessModel(addRes, '新增成功'));
+      } else {
+        console.error('新增失败', addRes);
+        return Promise.reject(new ErrorModel(addRes, '新增失败'));
+      }
+    } catch (e) {
+      console.error('新增失败', e);
+      return Promise.reject(new ErrorModel({}, '新增失败'));
+    }
   }
 
   /**
@@ -61,16 +74,22 @@ class GroupController {
    * @returns {Promise<*|undefined>}
    */
   async deleteGroup(groupId, userId) {
-    groupId = escape(groupId);
-    userId = escape(userId);
-    const sql = `delete from \`group\` where group_id=${groupId} and user_id=${userId}`;
     try {
       const group = await this.getGroupDetail(groupId, userId);
       if (group.group_delete_flag === 0) {
         return Promise.reject(new ErrorModel({}, '不可删除分组'));
       } else {
+        groupId = escape(groupId);
+        userId = escape(userId);
+        const sql = `delete from \`group\` where group_id=${groupId} and user_id=${userId}`;
+        console.log('sql', sql);
         const deleteRes = await exec(sql);
-        console.log('删除', deleteRes);
+        console.log('deleteRes', deleteRes);
+        if (deleteRes.affectedRows > 0) {
+          return Promise.resolve(new SuccessModel(deleteRes, '删除操作成功'));
+        } else {
+          return Promise.reject(new ErrorModel(deleteRes, '删除操作失败'));
+        }
       }
     } catch (e) {
       return Promise.reject(new ErrorModel({}, '删除分组操作错误'));
@@ -85,13 +104,17 @@ class GroupController {
   async update(group) {
     const groupName = escape(group.name);
     const groupRemark = escape(group.remark);
-    const groupDeleteFlag = escape(group.deleteFlag);
     const userId = escape(group.userId);
     const groupId = escape(group.groupId);
-    const sql = `update \`group\` set group_name=${groupName}, group_remark=${groupRemark}, group_delete_flag=${groupDeleteFlag} where group_id=${groupId} and user_id=${userId}`;
+    const sql = `update \`group\` set group_name=${groupName}, group_remark=${groupRemark} where group_id=${groupId} and user_id=${userId}`;
+    console.log('sql', sql);
     try {
       const updateRes = await exec(sql);
-
+      if (updateRes.affectedRows > 0) {
+        return Promise.resolve(new SuccessModel(updateRes, '更新操作成功'));
+      } else {
+        return Promise.reject(new ErrorModel(updateRes, '更新操作失败'));
+      }
     } catch (e) {
       console.error(e);
       return Promise.reject(new ErrorModel({}, '更新操作失败'));

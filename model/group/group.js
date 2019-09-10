@@ -1,5 +1,5 @@
 class Group {
-  constructor(name, deleteFlag, remark, userId) {
+  constructor(name, deleteFlag, remark, userId, groupId) {
     this.name = name;
     this.deleteFlag = deleteFlag;
     this.remark = remark;

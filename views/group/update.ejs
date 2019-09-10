@@ -25,34 +25,36 @@
 
 <!-- 内容区域 开始 -->
 <div class="content">
-    <p class="text-right">
-        <a class="btn btn-default" type="submit" href="/group/add">新增</a>
-    </p>
+    <% if (error) { %>
+    <p class="bg-warning"><%= error %></p>
+    <% } %>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 col-md-10 col-md-offset-1">
-            <table class="table table-bordered table-hover">
-                <tr>
-                    <th>分组ID</th>
-                    <th>分组名</th>
-                    <th>备注</th>
-                    <th>操作</th>
-                </tr>
-                <% list.forEach(function(group){ %>
-                    <tr>
-                        <td><%= group.group_id %></td>
-                        <td><%= group.group_name %></td>
-                        <td><%= group.group_remark %></td>
-                        <td>
-                            <% if (group.group_delete_flag === 1) { %>
-                                <a class="btn btn-default" type="submit" href="<%= '/group/update?groupId=' + group.group_id %>">更新</a>
-                                <a class="btn btn-default" type="submit" href="<%= '/group/delete?groupId=' + group.group_id %>" >删除</a>
-                            <% } else { %>
-                                <span>暂无操作</span>
-                            <% } %>
-                        </td>
-                    </tr>
-                <% }); %>
-            </table>
+            <form class="form-horizontal" method="post" action="/group/update">
+                <div class="form-group" style="display: none">
+                    <label for="inputGroupId" class="col-sm-2 control-label">分组ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="groupId" id="inputGroupId" placeholder="分组ID" value="<%= group.group_id %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputGroupName" class="col-sm-2 control-label">分组名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="groupName" id="inputGroupName" placeholder="分组名称" value="<%= group.group_name %>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputGroupRemark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" name="groupRemark" id="inputGroupRemark" placeholder="备注"><%= group.group_remark %></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">提交</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
