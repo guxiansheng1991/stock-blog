@@ -10,12 +10,16 @@ router.prefix('/blog');
 router.get('/list', loginCheck, async (ctx, next) => {
   const userId = ctx.session.user.user_id;
   const blogController = new BlogController();
+  const groupController = new GroupController();
   try {
-    const list = await blogController.getBlogList(userId);
+    const groupList = await groupController.getGroupList(userId);
+    console.log('groupList', groupList);
+    const list = await blogController.getBlogList(userId, ctx.request.query);
     await ctx.render('blog/blog', {
       title: '博客列表',
       user: ctx.session.user,
       list: list,
+      groupList: groupList,
       error: ''
     })
   } catch (e) {

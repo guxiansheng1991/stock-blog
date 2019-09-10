@@ -13,6 +13,7 @@ CREATE TABLE `stock-blog`.`blog` (
   `blog_remark` VARCHAR(500) NULL,
   `blog_content` VARCHAR(1000) NOT NULL,
   `user_id` INT NOT NULL,
+  `blog_createTime` INT NOT NULL,
   PRIMARY KEY (`blog_id`))
 COMMENT = '博客表';
 insert into blog(blog_name, blog_remark, blog_content, group_id, user_id) values('测试1', '', '测试1的内容', 1, 1);
@@ -53,4 +54,6 @@ insert into blog(blog_name, blog_remark, blog_content, group_id, user_id) values
 insert into comment(comment_content, comment_imgs, comment_time, blog_id, user_id) values('评论测试1', '', 1567931341843, 1, 1);
 
 select user_id, user_name, user_password from user where user_name='syc' and user_password='123456';
+
+select * from blog where user_id=1 and groupId=2;
 
