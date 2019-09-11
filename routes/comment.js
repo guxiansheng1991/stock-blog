@@ -45,4 +45,8 @@ router.get('/add', async (ctx, next) => {
   });
 });
 
+router.post('/add', loginCheck, async (ctx, next) => {
+  console.log(ctx.request);
+});
+
 module.exports = router;
