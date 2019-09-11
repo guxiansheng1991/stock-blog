@@ -22,25 +22,7 @@
 </head>
 <body>
 <!-- 导航区域 -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/blog/list">博客</a></li>
-        <li><a href="/group/list">分组</a></li>
-        <li><a href="/comment/list">点评</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <% if(user.user_name) { %>
-          <li><a href="/user/login"><%= user.user_name %></a></li>
-        <% } else { %>
-          <li><a href="/user/login">登录</a></li>
-        <% } %>
-      </ul>
-    </div>
-  </div>
-</nav>
+<%- include('sidebar', {user: user, activeClassName: 'blog'}); %>
 
 <!-- 内容区域 开始 -->
 <div class="content">

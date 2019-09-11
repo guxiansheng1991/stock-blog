@@ -1,11 +1,16 @@
 const { exec, escape } = require('../../db/mysql');
 const { genPassword } = require('../../util/cryo');
 
+
 class BlogController {
   constructor() {}
-  async getBlogList(userId) {
+  async getBlogList(userId, query) {
     userId = escape(userId);
-    const sql = `select * from blog where user_id=${userId}`;
+    let sql = `select * from blog where user_id=${userId}`;
+    // 增加查询条件
+    for (let key in query) {
+      sql += ` and ${key}=${escape(query[key])}`;
+    }
     console.log(sql);
     try {
       const list = await exec(sql);

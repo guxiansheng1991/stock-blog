@@ -28,6 +28,21 @@
     <p class="text-right">
         <a class="btn btn-default" type="submit" href="/blog/add">新增</a>
     </p>
+    <div class="row row-margin-bottom">
+        <div class="col-sm-1 col-sm-offset-1 col-xs-1 col-xs-offset-1 col-md-1 col-md-offset-1">
+            <span>分组</span>
+        </div>
+        <div class="col-sm-3 col-xs-3 col-md-3">
+            <select class="form-control" id="groupId">
+                <% groupList.forEach(function (group) { %>
+                    <option value="<%= group.group_id %>"><%= group.group_name %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-sm-2 col-xs-2 col-md-2">
+            <button class="btn btn-primary" onclick="getList()">查询</button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 col-md-10 col-md-offset-1">
             <% list.forEach(function (blog) { %>
@@ -41,7 +56,9 @@
                     <div class="panel-footer">
                         <p class="text-right">
                             <a class="btn btn-default btn-xs" type="submit" href="<%= '/blog/update?blogId=' + blog.blog_id %>">更新</a>
-                            <a class="btn btn-default btn-xs" type="submit" href="<%= '/blog/delete?blogId=' + blog.blog_id %>">删除</a>
+                            <a class="btn btn-danger btn-xs" type="submit" href="<%= '/blog/delete?blogId=' + blog.blog_id %>">删除</a>
+                            <a class="btn btn-default btn-xs" href="<%= '/comment/list?blogId=' + blog.blog_id %>">详情</a>
+                            <a class="btn btn-primary btn-xs" href="<%= '/comment/add?blogId=' + blog.blog_id + '&blogName=' + blog.blog_name %>">新增评论</a>
                         </p>
                     </div>
                 </div>
@@ -59,4 +76,17 @@
 <script src="/javascripts/util/moment.min.js"></script>
 <script src="/javascripts/util/util.js"></script>
 <script src="/javascripts/main.js"></script>
+<script>
+    function getList() {
+        const group_id = $('#groupId').val();
+        // window.location.href = window.location.href + '?groupId=' + groupId;
+        window.location.href = updateQueryString('group_id', group_id);
+    }
+    $(function () {
+        let queryObj = query2object(location.search);
+        if (queryObj.group_id) {
+            $('#groupId').val(Number(queryObj.group_id));
+        }
+    });
+</script>
 </html>
