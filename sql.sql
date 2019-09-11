@@ -54,3 +54,15 @@ insert into comment(comment_content, comment_imgs, comment_time, blog_id, user_i
 
 select user_id, user_name, user_password from user where user_name='syc' and user_password='123456';
 
+
+select group_id, group_name, group_remark, group_delete_flag, user_id from `group` where group_id=12 and user_id='1';
+
+select blog_id, blog_name, blog_content, blog_remark, group_id, user_id from blog where user_id=1;
+
+insert into blog(blog_name, blog_content, blog_remark, group_id, user_id) values();
+
+select * from blog where blog_id=1 and user_id=1;
+
+update blog set blog_name='', blog_content='', blog_remark='', group_id=1 where blog_id=1 and user_id=1;
+
+delete from blog where blog_id=2 and user_id=1;
