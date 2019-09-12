@@ -1,4 +1,7 @@
 const router = require('koa-router')();
+const { base64Toimg } = require('../util/file');
+const { uploadFilePath } = require('../config/file');
+const moment = require('moment')();
 const { SuccessModel, ErrorModel } = require('../model/resModel');
 const loginCheck = require('../middleware/loginCheck');
 const BlogModel = require('../model/blog/blog');
@@ -46,7 +49,22 @@ router.get('/add', async (ctx, next) => {
 });
 
 router.post('/add', loginCheck, async (ctx, next) => {
-  console.log(ctx.request);
+  console.log('ctx.request.body', ctx.request.body);
+  let { inputCommentContent, inputCommentConclusion, inputCommentImgs } = ctx.request.body;
+  const imgs = [];
+  try {
+    if (typeof inputCommentImgs === 'string') {
+      inputCommentImgs = [inputCommentImgs];
+    }
+    inputCommentImgs.forEach(async function (ele) {
+      const filename = uploadFilePath + '/' + moment.format('YYYY-MM-DD HH:mm:ss') + '.png';
+      const filenameString = await base64Toimg(ele, filename);
+      imgs.push(filenameString);
+      console.log('imgs', imgs);
+    });
+  } catch (e) {
+    console.error('新增评论错误', e);
+  }
 });
 
 module.exports = router;

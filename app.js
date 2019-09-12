@@ -4,11 +4,13 @@ const views = require('koa-views');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
+const koaBody = require('koa-body');
 const logger = require('koa-logger');
 
 const session = require('koa-generic-session');
 // const redisStore = require('koa-redis');
 const { REDIS_CONF } = require('./config/db');
+const { uploadFilePath } = require('./config/file');
 const path = require('path');
 const fs = require('fs');
 
@@ -22,9 +24,23 @@ const comment = require('./routes/comment');
 onerror(app);
 
 // middlewares
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+// app.use(bodyparser({
+//   enableTypes:['json', 'form', 'text']
+// }));
+app.use(koaBody({
+  // 支持文件上传
+  multipart:true,
+  // encoding:'gzip',
+  formidable: {
+    // 设置文件上传目录
+    uploadDir: uploadFilePath,
+    // 保持文件的后缀
+    keepExtensions: true,
+    // 文件上传大小
+    maxFieldsSize: 2 * 1024 * 1024
+  }
 }));
+
 app.use(json());
 app.use(logger());
 app.use(require('koa-static')(__dirname + '/public'));

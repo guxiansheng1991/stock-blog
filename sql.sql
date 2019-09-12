@@ -34,15 +34,15 @@ insert into `group`(group_name, group_delete_flag, group_remark, user_id) values
 CREATE TABLE `stock-blog`.`comment` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `comment_content` VARCHAR(500) NOT NULL,
+  `conclusion` VARCHAR(500) NOT NULL,
   `comment_time` VARCHAR(45) NOT NULL,
   `comment_imgs` VARCHAR(200) NULL,
   `blog_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`comment_id`))
 COMMENT = '评论';
-insert into comment(comment_content, comment_imgs, comment_time, blog_id, user_id) values('评论测试1', '', 1567931341843, 1, 1);
+insert into comment(comment_content, conclusion, comment_imgs, comment_time, blog_id, user_id) values('评论测试1', '', '', 1567931341843, 1, 1);
 
-insert into user(user_name, user_password) values('syc', '123456');
 
 insert into `group`(group_name, group_delete_flag, group_remark, user_id) values('已买过', 0, '', 1);
 insert into `group`(group_name, group_delete_flag, group_remark, user_id) values('已关注', 0, '', 1);
@@ -71,3 +71,7 @@ update blog set blog_name='', blog_content='', blog_remark='', group_id=1 where 
 delete from blog where blog_id=2 and user_id=1;
 
 select * from comment where blog_id=1 and user_id=1;
+
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
+ FLUSH PRIVILEGES;

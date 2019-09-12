@@ -95,12 +95,9 @@
         formData.append('inputCommentContent', $('#inputCommentContent').val());
         formData.append('inputCommentConclusion', $('#inputCommentConclusion').val());
         var inputCommentImgs = $('#inputCommentImgs').children();
-        var imgList = [];
         for (var i = 0; i < inputCommentImgs.length; i++) {
-            imgList.push(inputCommentImgs[i].src);
+            formData.append('inputCommentImgs', inputCommentImgs[i].src);
         }
-        console.log('imgList', imgList);
-        formData.append('inputCommentImgs', imgList);
         $.ajax({
             url: '/comment/add',
             type: 'post',
