@@ -34,7 +34,8 @@ router.get('/list', loginCheck, async (ctx, next) => {
     await ctx.render('comment/comment', {
       title: '点评列表',
       user: ctx.session.user,
-      list: initList(list)
+      list: initList(list),
+      blogId: blogId
     });
   } catch (e) {
     console.error('点评列表错误', e);
@@ -62,6 +63,19 @@ router.post('/add', loginCheck, async (ctx, next) => {
   } catch (e) {
     console.error('新增评论错误', e);
     ctx.body = new ErrorModel('新增评论错误', e);
+  }
+});
+
+router.get('/delete', async (ctx, next) => {
+  const userId = ctx.session.user.user_id;
+  const { blogId } = ctx.request.query;
+  const commentController = new CommentController();
+  try {
+    await commentController.del(blogId, userId);
+    ctx.redirect(`/comment/list?blogId=${blogId}`);
+  } catch (e) {
+    console.error('删除评论失败', e);
+    ctx.body = new ErrorModel(e, '删除评论失败');
   }
 });
 

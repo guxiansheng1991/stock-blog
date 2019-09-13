@@ -41,6 +41,22 @@ class CommentCtroller {
           return Promise.reject(e);
       }
   }
+
+  async del(blogId, userId) {
+      blogId = escape(blogId);
+      userId = escape(userId);
+      const sql = `delete from comment where blog_id=${blogId} and user_id=${userId}`;
+      try {
+          const res = await exec(sql);
+          if (res.affectedRows > 0) {
+              return Promise.resolve(res);
+          } else {
+              return Promise.reject(res);
+          }
+      } catch (e) {
+          return Promise.reject(e);
+      }
+  }
 }
 
 module.exports = CommentCtroller;
