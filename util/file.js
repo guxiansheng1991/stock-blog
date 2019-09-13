@@ -4,12 +4,15 @@ const fs = require('fs');
 async function base64Toimg(base64String, filename) {
   const base64Data = base64String.replace(/^data:image\/\w+;base64,/, "");
   const dataBuffer = Buffer.from(base64Data, 'base64');
-  fs.writeFile(filename, dataBuffer, function(err) {
-    if(err){
-      return Promise.reject(err);
-    }else{
-      return Promise.resolve(filename);
-    }
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filename, dataBuffer, function(err) {
+      if(err){
+        console.error(err);
+        return reject(err);
+      }else{
+        return resolve(filename);
+      }
+    });
   });
 }
 

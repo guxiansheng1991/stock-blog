@@ -17,7 +17,9 @@ function initList(list) {
   const resList = list;
   resList.forEach((ele) => {
     if(ele.comment_imgs) {
-      ele.comment_imgs = ele.comment_imgs.split(',');
+      ele.comment_imgs = ele.comment_imgs.split(' ');
+    } else {
+      ele.comment_imgs = [];
     }
   });
   return resList;
@@ -49,21 +51,17 @@ router.get('/add', async (ctx, next) => {
 });
 
 router.post('/add', loginCheck, async (ctx, next) => {
-  console.log('ctx.request.body', ctx.request.body);
-  let { inputCommentContent, inputCommentConclusion, inputCommentImgs } = ctx.request.body;
-  const imgs = [];
+  const userId = ctx.session.user.user_id;
+  const { inputCommentContent, inputCommentConclusion, inputCommentImgs, blogId } = ctx.request.body;
+  const currentTime = Date.now();
+  const commentController = new CommentController();
+  const comment = new CommentModel(-1, inputCommentContent, currentTime, inputCommentImgs, inputCommentConclusion, blogId, userId);
   try {
-    if (typeof inputCommentImgs === 'string') {
-      inputCommentImgs = [inputCommentImgs];
-    }
-    inputCommentImgs.forEach(async function (ele) {
-      const filename = uploadFilePath + '/' + moment.format('YYYY-MM-DD HH:mm:ss') + '.png';
-      const filenameString = await base64Toimg(ele, filename);
-      imgs.push(filenameString);
-      console.log('imgs', imgs);
-    });
+    const res = await commentController.add(comment);
+    ctx.body = new SuccessModel(res, '新增成功');
   } catch (e) {
     console.error('新增评论错误', e);
+    ctx.body = new ErrorModel('新增评论错误', e);
   }
 });
 

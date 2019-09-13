@@ -18,6 +18,29 @@ class CommentCtroller {
       return Promise.reject(new ErrorModel(e, '查询评论详情失败'));
     }
   }
+
+  async add(comment) {
+      const commentContent = escape(comment.commentContent);
+      const commentTime = escape(comment.commentTime);
+      const commentImgList = escape(comment.commentImgList);
+      const commentConclusion = escape(comment.commentConclusion);
+      const blogId = escape(comment.blogId);
+      const userId = escape(comment.userId);
+      const sql = `insert into comment(comment_content, comment_time, comment_imgs, conclusion, blog_id, user_id) 
+                        values(${commentContent},${commentTime},${commentImgList},${commentConclusion},${blogId},${userId})`;
+      console.log(sql);
+      try {
+          const res = await exec(sql);
+          console.log('add', res);
+          if (res.affectedRows > 0) {
+              return Promise.resolve(res);
+          } else {
+              return Promise.reject(res);
+          }
+      } catch (e) {
+          return Promise.reject(e);
+      }
+  }
 }
 
 module.exports = CommentCtroller;

@@ -19,6 +19,7 @@ const users = require('./routes/users');
 const group = require('./routes/group');
 const blog = require('./routes/blog');
 const comment = require('./routes/comment');
+const common = require('./routes/common');
 
 // error handler
 onerror(app);
@@ -75,6 +76,7 @@ app.use(users.routes(), users.allowedMethods());
 app.use(group.routes(), group.allowedMethods());
 app.use(blog.routes(), blog.allowedMethods());
 app.use(comment.routes(), comment.allowedMethods());
+app.use(common.routes(), common.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
