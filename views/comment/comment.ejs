@@ -48,13 +48,13 @@
                 <div class="row">
                     <div class="col-sm-12 col-xs-12 col-md-12">
                         <p class="text-primary">分析:</p>
-                        <p><%= comment.comment_content %></p>
+                        <p class="comment-content" data="<%= comment.comment_content %>"></p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-xs-12 col-md-12">
                         <p class="text-primary">结论:</p>
-                        <p><%= comment.conclusion %></p>
+                        <p class="comment-conclusion" data="<%= comment.conclusion %>"></p>
                     </div>
                 </div>
             </div>
@@ -74,6 +74,18 @@
 <script>
     $(function () {
         $('#blogName').text(query2object(decodeURIComponent(location.search)).blogName);
+        // 页面显示xss转化后的值
+        setHtml('comment-content');
+        setHtml('comment-conclusion');
     });
+
+    // 设置经过xss编译的html
+    function setHtml(className) {
+      var contents = $('.' + className);
+      for (var i = 0; i < contents.length; i++) {
+        var item = contents[i];
+        $(item).html($(item).attr('data'));
+      }
+    }
 </script>
 </html>

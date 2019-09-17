@@ -12,6 +12,11 @@ const CommentController = require('../controller/comment/comment');
 
 router.prefix('/comment');
 
+// html解析xss代码
+function unescapeHtml(html) {
+  return html.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+}
+
 // 初始化数据库中获取到的comment的list
 function initList(list) {
   const resList = list;

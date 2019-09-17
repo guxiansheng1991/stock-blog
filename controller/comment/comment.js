@@ -1,3 +1,4 @@
+const xss = require('xss');
 const { exec, escape } = require('../../db/mysql');
 const { SuccessModel, ErrorModel } = require('../../model/resModel');
 
@@ -20,10 +21,10 @@ class CommentCtroller {
   }
 
   async add(comment) {
-      const commentContent = escape(comment.commentContent);
+      const commentContent = escape(xss(comment.commentContent));
       const commentTime = escape(comment.commentTime);
       const commentImgList = escape(comment.commentImgList);
-      const commentConclusion = escape(comment.commentConclusion);
+      const commentConclusion = escape(xss(comment.commentConclusion));
       const blogId = escape(comment.blogId);
       const userId = escape(comment.userId);
       const sql = `insert into comment(comment_content, comment_time, comment_imgs, conclusion, blog_id, user_id) 
