@@ -12,11 +12,7 @@ class SummaryController {
     try {
       const list = await exec(sql);
       console.log('getList', list);
-      if (list.length > 0) {
-        return Promise.resolve(list);
-      } else {
-        return Promise.reject(list);
-      }
+      return Promise.resolve(list);
     } catch (e) {
       return Promise.reject(e);
     }

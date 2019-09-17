@@ -43,6 +43,15 @@ CREATE TABLE `stock-blog`.`comment` (
 COMMENT = '评论';
 insert into comment(comment_content, conclusion, comment_imgs, comment_time, blog_id, user_id) values('评论测试1', '', '', 1567931341843, 1, 1);
 
+CREATE TABLE `stock-blog`.`summary` (
+  `summary_id` INT NOT NULL AUTO_INCREMENT,
+  `summary_title` VARCHAR(200) NOT NULL,
+  `summary_content` LONGTEXT NOT NULL,
+  `summary_time` BIGINT(20) NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`summary_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 insert into `group`(group_name, group_delete_flag, group_remark, user_id) values('已买过', 0, '', 1);
 insert into `group`(group_name, group_delete_flag, group_remark, user_id) values('已关注', 0, '', 1);
@@ -83,4 +92,6 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
 select * from comment where blog_id=1 and user_id=1 order by comment_time;
 
 select * from summary where user_id=1;
+
+
     
