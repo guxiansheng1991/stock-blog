@@ -20,6 +20,7 @@ const group = require('./routes/group');
 const blog = require('./routes/blog');
 const comment = require('./routes/comment');
 const common = require('./routes/common');
+const summary = require('./routes/summary');
 
 // error handler
 onerror(app);
@@ -77,6 +78,7 @@ app.use(group.routes(), group.allowedMethods());
 app.use(blog.routes(), blog.allowedMethods());
 app.use(comment.routes(), comment.allowedMethods());
 app.use(common.routes(), common.allowedMethods());
+app.use(summary.routes(), summary.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {

@@ -79,5 +79,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456';
  insert into comment(comment_content, comment_time, comment_imgs, conclusion, blog_id, user_id) values();
  
  delete from comment where blog_id=1 and user_id=1;
-    
+
+select * from comment where blog_id=1 and user_id=1 order by comment_time;
+
+select * from summary where user_id=1;
     
