@@ -22,4 +22,26 @@ router.get('/list', loginCheck, async (ctx, next) => {
   }
 });
 
+router.get('/add', loginCheck, async (ctx, next) => {
+  const userId = ctx.session.user.user_id;
+  await ctx.render('summary/add', {
+    title: '新增总结',
+    user: ctx.session.user
+  });
+});
+
+router.post('/add', loginCheck, async (ctx, next) => {
+  const userId = ctx.session.user.user_id;
+  const { summaryContent, summaryTitle } = ctx.request.body;
+  const currentTime = Date.now();
+  const summaryModel = new SummaryModel(-1, summaryTitle, summaryContent,currentTime, userId);
+  const summaryController = new SummaryController();
+  try {
+    const res = await summaryController.add(summaryModel);
+    ctx.body = new SuccessModel(res, '新增成功');
+  } catch (e) {
+    ctx.body = new ErrorModel(e, '新增失败');
+  }
+});
+
 module.exports = router;
