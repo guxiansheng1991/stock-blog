@@ -53,8 +53,12 @@ router.get('/add', async (ctx, next) => {
 
 router.post('/add', loginCheck, async (ctx, next) => {
   const userId = ctx.session.user.user_id;
-  const { inputCommentContent, inputCommentConclusion, inputCommentImgs, blogId } = ctx.request.body;
-  const currentTime = Date.now();
+  const { inputCommentContent, inputCommentConclusion, inputCommentImgs, blogId, inputCommentTime } = ctx.request.body;
+  let currentTime = Date.now();
+  if (inputCommentTime) {
+    const date = new Date(inputCommentTime);
+    currentTime = date.getTime();
+  }
   const commentController = new CommentController();
   const comment = new CommentModel(-1, inputCommentContent, currentTime, inputCommentImgs, inputCommentConclusion, blogId, userId);
   try {

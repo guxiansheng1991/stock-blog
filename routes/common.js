@@ -9,7 +9,7 @@ router.prefix('/common');
 
 router.post('/uploadImg', loginCheck, async (ctx, next) => {
     let { inputImgs } = ctx.request.body;
-    const filename = moment.format('YYYYMMDDHHmmss') + '.png';
+    const filename = moment.format('YYYYMMDD') + Number.parseInt(Math.random() * 1000) + '.png';
     try {
         await base64Toimg(inputImgs, uploadFilePath + filename);
         const httpImgPath = uploadFileRelativePath + filename;

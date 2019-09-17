@@ -7,7 +7,7 @@ class CommentCtroller {
   async getList(blogId, userId) {
     blogId = escape(blogId);
     userId = escape(userId);
-    const sql = `select * from comment where blog_id=${blogId} and user_id=${userId}`;
+    const sql = `select * from comment where blog_id=${blogId} and user_id=${userId} order by comment_time`;
     console.log(sql);
     try {
       const list = await exec(sql);

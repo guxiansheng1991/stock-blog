@@ -27,6 +27,7 @@
 <div class="content">
     <div>
         <h1>博客名称: <span id="blogName"></span></h1>
+        <a class="btn btn-primary btn-xs" href="<%= '/comment/add?blogId=' + blogId %>">新增评论</a>
         <hr>
     </div>
     <% list.forEach(function (comment) { %>
