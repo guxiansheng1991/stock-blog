@@ -44,4 +44,45 @@ router.post('/add', loginCheck, async (ctx, next) => {
   }
 });
 
+router.get('/update', loginCheck, async (ctx, next) => {
+  const userId = ctx.session.user.user_id;
+  const { summaryId } = ctx.request.query;
+  const summaryController = new SummaryController();
+  try {
+    const res = await summaryController.detail(userId, summaryId);
+    await ctx.render('summary/update', {
+      title: '更新总结',
+      user: ctx.session.user,
+      detail: res
+    });
+  } catch (e) {
+    ctx.body = new ErrorModel(e, '无此总结文章');
+  }
+});
+
+router.post('/update', loginCheck, async (ctx, next) => {
+  const userId = ctx.session.user.user_id;
+  const { summaryContent, summaryTitle, summaryId } = ctx.request.body;
+  const summaryModel = new SummaryModel(summaryId, summaryTitle, summaryContent,-1 , userId);
+  const summaryController = new SummaryController();
+  try {
+    const res = await summaryController.update(summaryModel);
+    ctx.body = new SuccessModel(res, '更新成功');
+  } catch (e) {
+    ctx.body = new ErrorModel(e, '更新失败');
+  }
+});
+
+router.get('/delete', loginCheck, async (ctx, next) => {
+  const userId = ctx.session.user.user_id;
+  const { summaryId } = ctx.request.query;
+  const summaryController = new SummaryController();
+  try {
+    const res = await summaryController.delete(userId, summaryId);
+    await ctx.redirect('/summary/list');
+  } catch (e) {
+    ctx.body = new ErrorModel(e, '删除失败');
+  }
+});
+
 module.exports = router;
