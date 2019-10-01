@@ -73,7 +73,7 @@
       data: formData,
       success: function(res) {
         if (res.errno === 200) {
-          editorContent.txt.html('<a href="'+ res.message +'"><img style="height: 100px;" src="'+ res.message +'" /></a>');
+          editorContent.txt.append('<a href="'+ res.message +'"><img style="height: 100px;" src="'+ res.message +'" /></a>')
         } else {
           alert(res.message);
         }

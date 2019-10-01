@@ -35,9 +35,7 @@
                     <div class="panel-heading">
                         <%= summary.summary_title %>
                     </div>
-                    <div class="panel-body">
-                        <%= summary.summary_content %>
-                    </div>
+                    <div class="panel-body summary-content" data="<%= summary.summary_content %>"></div>
                     <div class="panel-footer">
                         <p class="text-right">
                             <a class="btn btn-default btn-xs" type="submit" href="<%= '/summary/update?summaryId=' + summary.summary_id %>">更新</a>
@@ -57,4 +55,13 @@
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script src="/javascripts/util/util.js"></script>
+<script>
+    $(function () {
+        var summaryContent = $('.summary-content');
+        $.each(summaryContent, function (index, summary) {
+            var summaryJQ = $(summary);
+            summaryJQ.html(summaryJQ.attr('data'));
+        });
+    });
+</script>
 </html>
