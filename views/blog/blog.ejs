@@ -29,15 +29,22 @@
         <a class="btn btn-default" type="submit" href="/blog/add">新增</a>
     </p>
     <div class="row row-margin-bottom">
-        <div class="col-sm-1 col-sm-offset-1 col-xs-1 col-xs-offset-1 col-md-1 col-md-offset-1">
+        <div class="col-sm-1 col-sm-offset-1 col-xs-1 col-xs-offset-1 col-md-1 col-md-offset-1" style="text-align: right;">
             <span>分组</span>
         </div>
-        <div class="col-sm-3 col-xs-3 col-md-3">
+        <div class="col-sm-2 col-xs-2 col-md-2">
             <select class="form-control" id="groupId">
                 <% groupList.forEach(function (group) { %>
                     <option value="<%= group.group_id %>"><%= group.group_name %></option>
                 <% }) %>
             </select>
+        </div>
+        <div class="col-sm-1 col-sm-offset-1 col-xs-1 col-xs-offset-1 col-md-1 col-md-offset-1" style="text-align: right;">
+            <span>名称</span>
+            <input id="noGroup" type="checkbox" value="noGroup">
+        </div>
+        <div class="col-sm-2 col-xs-2 col-md-2">
+            <input type="text" class="form-control" id="blogName" placeholder="名称">
         </div>
         <div class="col-sm-2 col-xs-2 col-md-2">
             <button class="btn btn-primary" onclick="getList()">查询</button>
@@ -79,13 +86,25 @@
 <script>
     function getList() {
         const group_id = $('#groupId').val();
+        const blog_name = $('#blogName').val();
+        const no_group = $('#noGroup').val();
         // window.location.href = window.location.href + '?groupId=' + groupId;
-        window.location.href = updateQueryString('group_id', group_id);
+        let obj = {};
+        if (group_id && !no_group) {
+            obj['group_id'] = group_id;
+        }
+        if (blog_name) {
+            obj['blog_name'] = blog_name;
+        }
+        window.location.href = updateSomeQueryString(obj);
     }
     $(function () {
         let queryObj = query2object(location.search);
         if (queryObj.group_id) {
             $('#groupId').val(Number(queryObj.group_id));
+        }
+        if (queryObj.blog_name) {
+            $('#blogName').val(decodeURIComponent(queryObj.blog_name));
         }
     });
 </script>

@@ -16,8 +16,9 @@ function query2object(queryString) {
 function object2query(obj) {
     let res = '';
     for (let key in obj) {
-        res += key + '=' + obj[key];
+        res += key + '=' + obj[key] + '&';
     }
+    res = res.substr(0, res.length - 1);
     return res;
 }
 
@@ -26,5 +27,11 @@ function updateQueryString(key, value) {
     let obj = query2object(location.search);
     obj[key] = value;
     const query = object2query(obj);
+    return location.origin + location.pathname + '?' + query;
+}
+
+// 更新查询字符串中的一组值
+function updateSomeQueryString(objOrigin) {
+    const query = object2query(objOrigin);
     return location.origin + location.pathname + '?' + query;
 }
