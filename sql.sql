@@ -93,5 +93,24 @@ select * from comment where blog_id=1 and user_id=1 order by comment_time;
 
 select * from summary where user_id=1;
 
+CREATE TABLE `stock-blog`.`notice` (
+  `notice_id` INT NOT NULL AUTO_INCREMENT,
+  `notice_time` BIGINT NOT NULL,
+  `notice_content` VARCHAR(500) NOT NULL,
+  `notice_stick` VARCHAR(1) NOT NULL DEFAULT 0,
+  `user_id` BIGINT NOT NULL,
+  PRIMARY KEY (`notice_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '公告';
+insert into notice(notice_time, notice_content, notice_stick, user_id) values(1571194830777, '还好还好', 0, 1);
+insert into notice(notice_time, notice_content, notice_stick, user_id) values(1571194830779, '哈哈哈哈哈哈', 1, 1);
 
-    
+select * from notice where user_id=1 order by notice_time desc;  
+select * from notice where user_id=1 and notice_id=1;
+
+update notice set notice_content='123131231', notice_stick='1' where user_id=1 and notice_id=1;
+
+delete from notice where user_id=1 and notice_id=5;
+
+update notice set notice_stick='1' where user_id=1;
